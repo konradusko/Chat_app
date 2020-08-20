@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" type="text/css" href="/style.css">
+</head>
+
+<body>
+  <h1>Hi <%= user %></h1>
+  <form action="/logout?_method=DELETE" method="POST">
+    <button type="submit">Log Out</button>
+  </form>
+
+  <h1 class="test">Join to Chat</h1>
+  <form action="chat" method="GET">
+    <label for="room">Room</label>
+    <select name="room" id="room">
+      <% rooms.forEach(e=>{ %>
+      <option value=<%= e.value %>><%= e.value %></option>
+      <% }) %>
+    </select>
+    <button type="submit">submit</button>
+  </form>
+</body>
+
+</html>

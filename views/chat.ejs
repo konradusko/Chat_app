@@ -1,0 +1,36 @@
+<script src="/socket.io/socket.io.js"></script>
+<%= user.name %>
+<%= room %>
+<form id="chat-form">
+    <input id="input_text" type="text" placeholder="Enter Message" required  autocomplete="off">
+    <button id="button_submit">submit</button>
+</form>
+<div id="messages" class="messages">
+</div>
+<script>
+    const room = '<%= room %>';
+    const user = '<%= user.id %>';
+    const socket = io();
+    const chat_form = document.getElementById('chat-form');
+    //join to room
+    const obj = {
+        "userID": user,
+        "room": room
+    }
+    socket.emit('joinRoom', {
+        obj
+    })
+    //messages from server
+    socket.on('MessageFromServer', message => {
+        console.log(message)
+    })
+    //send a message
+    chat_form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const message = e.target.elements.input_text.value;
+        socket.emit('MessageFromClient',message);
+        e.target.elements.input_text.value ='';
+        e.target.elements.input_text.focus();
+
+    })
+</script>
