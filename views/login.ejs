@@ -1,16 +1,35 @@
-<h1>Login</h1>
-<% if (messages.error) { %>
-  <%= messages.error %>
-<% } %>
-<form action="/login" method="POST">
-  <div>
-    <label for="email">Email</label>
-    <input type="email" id="email" name="email" required>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="/loginPage.css">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="container_context">
+      <h1 class="title">Konradusko chat</h1>
+      <h2 class="Title_2">Login</h2>
+      <form class="form_container" action="/login" method="POST">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+        <span class="messFromServer">       <% if (messages.error) { %>
+          <%= messages.error %>
+          <% } %></span>
+          <button class="button_login" type="submit">Login</button>
+
+      </form>
+      <button class="button_register"> <a href="/register">Register</a></button>
+
+    </div>
+
   </div>
-  <div>
-    <label for="password">Password</label>
-    <input type="password" id="password" name="password" required>
-  </div>
-  <button type="submit">Login</button>
-</form>
-<a href="/register">Register</a>
+
+</body>
+
+</html>

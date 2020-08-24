@@ -1,0 +1,185 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    background-color: rgb(26, 24, 24);
+    width: 100%;
+    height: 100vh;
+    display: flex;
+}
+
+.container_context {
+    background-color: rgb(104, 102, 102);
+    opacity: .7;
+    width: 80%;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    margin: auto;
+}
+
+.title_and_back_button_container {
+    width: 100%;
+    height: 18%;
+    background-color: rgb(82, 80, 80);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.title_and_back_button_container h1 {
+    color: white;
+    margin: auto 0 auto 10px;
+}
+
+.Leave_room_button {
+    width: 130px;
+    height: 50px;
+    margin: auto 10px auto 0;
+    border-radius: 5px;
+    color: black;
+    border: none;
+    cursor: pointer;
+
+}
+
+.Leave_room_button a {
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
+}
+
+.users_and_messages_container {
+    width: 100%;
+    display: flex;
+    height: 67%;
+
+}
+
+.users_container {
+    width: 30%;
+    border-right: 2px solid white;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.rooms_container {
+    width: 90%;
+    height: 30%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.rooms_container span {
+    font-size: 20px;
+    color: white;
+    margin: auto 0;
+}
+
+.users_container_users_on_channel {
+    width: 90%;
+    height: 70%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.users_container_users_on_channel span {
+    font-size: 20px;
+    color: white;
+}
+
+.users {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    list-style-type: none;
+}
+.users li {
+    color:white;
+}
+
+
+.messages_container {
+    width: 70%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+
+/*message */
+.mess_container {
+    background-color: rgb(82, 80, 80);
+    display: flex;
+    max-width: 70%;
+    border-radius: 5px;
+    margin: 15px auto 15px 15px;
+    flex-direction: column;
+
+}
+
+.Nick_Time {
+    color: white;
+    margin: 10px;
+}
+
+.nick_name {
+    font-size: 18px;
+}
+
+.mess_content {
+    color: white;
+    margin: 0 10px 10px 10px;
+}
+
+.send_message_container {
+    width: 100%;
+    height: 15%;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: rgb(82, 80, 80);
+    display: flex;
+}
+
+.epmty_space {
+    width: 30%;
+    height: 100%;
+}
+
+.input_message_container {
+    width: 70%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.input_message_container input {
+    width: 70%;
+    height: 50%;
+    font-size: 20px;
+    border-radius: 5px;
+    border: none;
+    margin: auto 0;
+}
+
+.input_message_container button {
+    width: 130px;
+    height: 35px;
+    margin: auto 10px auto 0;
+    border-radius: 5px;
+    color: black;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+}

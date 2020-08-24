@@ -5,25 +5,43 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link rel="stylesheet" type="text/css" href="/style.css">
+  <link rel="stylesheet" type="text/css" href="/index.css">
 </head>
 
 <body>
-  <h1>Hi <%= user %></h1>
-  <form action="/logout?_method=DELETE" method="POST">
-    <button type="submit">Log Out</button>
-  </form>
 
-  <h1 class="test">Join to Chat</h1>
-  <form action="chat" method="GET">
-    <label for="room">Room</label>
-    <select name="room" id="room">
-      <% rooms.forEach(e=>{ %>
-      <option value=<%= e.value %>><%= e.value %></option>
-      <% }) %>
-    </select>
-    <button type="submit">submit</button>
-  </form>
+  <div class="container">
+    <div class="container_context">
+      <h1 class="title">Konradusko chat</h1>
+
+      <div class="label">
+        <span class="label_title">Hello <strong> <%= user %></strong></span>
+        <form action="/logout?_method=DELETE" method="POST">
+          <button class="button" type="submit">Log Out</button>
+        </form>
+      </div>
+  
+      <div class="label">
+
+        <form class="form_container" action="chat" method="GET">
+          <div class="form_inside_container">
+            <span class="title">Join to room.</span>
+            <label for="room">Rooms :</label>
+  
+            <select name="room" id="room">
+              <% rooms.forEach(e=>{ %>
+              <option value=<%= e.value %>><%= e.value %></option>
+              <% }) %>
+            </select>
+          </div>
+          <button class="button" type="submit">submit</button>
+        </form>
+      </div>
+    </div>
+ 
+
+  </div>
+
 </body>
 
 </html>

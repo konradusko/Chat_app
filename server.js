@@ -22,6 +22,7 @@ const {
     addUserToRoom,
     removeUserFromRoomById,
     addMessageToRoom,
+    takeAllUserFromRoom
 } = require('./database');
 app.use(express.static(path.join(__dirname, "public")));
 const {
@@ -36,7 +37,7 @@ app.use(express.urlencoded({
 }))
 app.use(flash());
 app.use(express_session({
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET || secret,
     resave: false,
     saveUninitialized: false
 }))
@@ -58,7 +59,6 @@ app.get('/chat', checkAuthenticated, routerChat)
 //socket
 
 io.on('connection', socket => {
-    console.log('connected ')
     socket.on('joinRoom', ({
         obj
     }) => {
@@ -67,6 +67,7 @@ io.on('connection', socket => {
         user.chatRoom = obj.room;
         addUserToRoom(user)
         socket.join(user.chatRoom);
+        io.to(user.chatRoom).emit('UsersOnchannel',takeAllUserFromRoom(user))
         // //message from server that you join
         socket.emit('MessageFromServer', formatMessage(`Welcome on Konradusko chat , you join ${user.chatRoom} room `, bot));
         // //brodcast
@@ -75,8 +76,8 @@ io.on('connection', socket => {
     socket.on('disconnect', () => {
         const user = getUserBySocketId(socket.id)
         if (user) {
-            console.log('se poszedl')
             io.to(user.chatRoom).emit('MessageFromServer', formatMessage(`${user.name} has Left  ${user.chatRoom} room`, bot))
+            socket.leave(user.chatRoom)
             removeUserFromRoomById(user);
             user.socketId = null;
             user.chatRoom = null;

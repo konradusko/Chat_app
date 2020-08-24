@@ -1,36 +1,99 @@
-<script src="/socket.io/socket.io.js"></script>
-<%= user.name %>
-<%= room %>
-<form id="chat-form">
-    <input id="input_text" type="text" placeholder="Enter Message" required  autocomplete="off">
-    <button id="button_submit">submit</button>
-</form>
-<div id="messages" class="messages">
-</div>
-<script>
-    const room = '<%= room %>';
-    const user = '<%= user.id %>';
-    const socket = io();
-    const chat_form = document.getElementById('chat-form');
-    //join to room
-    const obj = {
-        "userID": user,
-        "room": room
-    }
-    socket.emit('joinRoom', {
-        obj
-    })
-    //messages from server
-    socket.on('MessageFromServer', message => {
-        console.log(message)
-    })
-    //send a message
-    chat_form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const message = e.target.elements.input_text.value;
-        socket.emit('MessageFromClient',message);
-        e.target.elements.input_text.value ='';
-        e.target.elements.input_text.focus();
+<!DOCTYPE html>
+<html lang="en">
 
-    })
-</script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="/chat.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="container_context">
+            <div class="title_and_back_button_container">
+                <h1>Konradusko Chat</h1>
+                <button class="Leave_room_button"><a href="/">Leave Room</a></button>
+            </div>
+            <div class="users_and_messages_container">
+                <div class="users_container">
+                    <div class="rooms_container">
+                        <span>Room: <strong><%= room %></strong></span>
+                        <span>Your nick: <strong><%= user.name %></strong></span>
+                    </div>
+                    <div class="users_container_users_on_channel">
+                        <span>Users:</span>
+                        <ul id="users_On_Channel_id" class="users">
+                        </ul>
+                    </div>
+                </div>
+                <div class="messages_container" id="messages">
+
+
+                </div>
+            </div>
+            <div class="send_message_container">
+                <div class="epmty_space">
+
+                </div>
+                <form id="chat-form" class="input_message_container">
+                    <input id="input_text" type="text" placeholder="Enter Message" required autocomplete="off">
+                    <button id="button_submit">submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script>
+        const room = '<%= room %>';
+        const user = '<%= user.id %>';
+        const socket = io();
+        const message_container = document.getElementById('messages');
+        const chat_form = document.getElementById('chat-form');
+        const users_container = document.getElementById('users_On_Channel_id');
+        //join to room
+        const obj = {
+            "userID": user,
+            "room": room
+        }
+        socket.emit('joinRoom', {
+            obj
+        })
+        //messages from server
+        socket.on('MessageFromServer', message => {
+            outputMessage(message)
+            message_container.scrollTop = message_container.scrollHeight;
+        })
+        //users on room
+        socket.on("UsersOnchannel", (e) => {
+            outputUsers(e);
+        })
+        //send a message
+        chat_form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const message = e.target.elements.input_text.value;
+            socket.emit('MessageFromClient', message);
+            e.target.elements.input_text.value = '';
+            e.target.elements.input_text.focus();
+
+        })
+
+        function outputMessage(message) {
+            const div = document.createElement('div');
+            div.classList.add('mess_container');
+            div.innerHTML = ' <div class="Nick_Time"><span class="nick_name">' + message.userName + ' </span><span> ' +
+                message.time + '</span></div><div class="mess_content">' + message.message + '</div>'
+            message_container.appendChild(div)
+        }
+
+        function outputUsers(users) {
+             users_container.innerHTML = `${users.map(user => `<li>${user.name}</li>`)}`
+          
+        }
+    </script>
+
+</body>
+
+</html>

@@ -6,34 +6,39 @@ users = [{
     password: '$2b$10$4mUf0NuKq/9qmAPX8..Ob.3UWS12kSsTKQ0Rw2jQoK2DkYwmty.XO',
     socketId: null,
     chatRoom: null
-}];
-let pythonRoom = {
-    usersInRoom: [],
-    messagesInRoom: []
+},
+{
+    id: '1598286848691',
+    name: 'q@q',
+    email: 'q@q',
+    password: '$2b$10$IEoPd.9upvBYLQ9Km7aFSOiQzt3F4HyRSvlEb2hcvudeFmRbeu7EO',
+    socketId: null,
+    chatRoom: null
+  }];
 
-}
-let javaRoom = {
-    usersInRoom: [],
-    messagesInRoom: []
-
-}
-let javascriptRoom = {
-    usersInRoom: [],
-    messagesInRoom: []
-
-}
 //// rooms
 rooms = [{
         value: 'python',
-        room:pythonRoom
+        room: {
+            usersInRoom: [],
+            messagesInRoom: []
+        }
     },
     {
         value: "java",
-        room:javaRoom
+        room: {
+            usersInRoom: [],
+            messagesInRoom: []
+        
+        }
     },
     {
         value: "javascript",
-        room:javascriptRoom
+        room: {
+            usersInRoom: [],
+            messagesInRoom: []
+        
+        }
     }
 
 ]
@@ -48,7 +53,6 @@ function addUser(id, name, email, password) {
         socketId: null,
         chatRoom: null
     })
-    console.log(users)
 }
 
 function getUserById(id) {
@@ -65,7 +69,11 @@ function getUserByEmail(email) {
 
 
 function getRooms() {
-    return rooms;
+    let roomsValue = [];
+    rooms.forEach(element => {
+        roomsValue.push({value:element.value})
+    });
+    return roomsValue;
 }
 
 function addUserToRoom(user) {
@@ -81,27 +89,33 @@ function removeUserFromRoomById(user) {
         return index.splice(index, 1)[0];
     }
 }
+
 function addMessageToRoom(user, message) {
-    
+    let currentRoom = rooms.find(rom => rom.value === user.chatRoom);
+    currentRoom.room.messagesInRoom.push(formatMessage(message, user))
+}
 
+function takeAllUserFromRoom(user) {
+    let currentRoom = rooms.find(rom => rom.value === user.chatRoom);
+    return currentRoom.room.usersInRoom;
 
-    if (user.chatRoom === 'python') {
-        pythonRoom.messagesInRoom.push(formatMessage(message, user));
-        console.log(pythonRoom.messagesInRoom[0].userName.name)
-    } else if (user.chatRoom === 'java') {
-        javaRoom.messagesInRoom.push(formatMessage(message, user));
-    } else if (user.chatRoom === "javascript") {
-        javascriptRoom.messagesInRoom.push(formatMessage(message, user));
+}
+
+function checkIfThisNameHasBeenUsed(name) {
+    let isUsed = users.find(user => user.name === name);
+    if (isUsed === undefined) {
+        return false;
+    } else {
+        return true;
     }
 }
-function takeAllUserFromRoom(user){
-    if (user.chatRoom === 'python') {
-        pythonRoom.messagesInRoom.push(formatMessage(message, user));
-        console.log(pythonRoom.messagesInRoom[0].userName.name)
-    } else if (user.chatRoom === 'java') {
-        javaRoom.messagesInRoom.push(formatMessage(message, user));
-    } else if (user.chatRoom === "javascript") {
-        javascriptRoom.messagesInRoom.push(formatMessage(message, user));
+
+function checkIfThisEmailHasBeenUsed(email) {
+    let isUsed = users.find(user => user.email === email);
+    if (isUsed === undefined) {
+        return false;
+    } else {
+        return true;
     }
 }
 
@@ -114,6 +128,9 @@ module.exports = {
     addUserToRoom,
     removeUserFromRoomById,
     addMessageToRoom,
-    
+    takeAllUserFromRoom,
+    checkIfThisNameHasBeenUsed,
+    checkIfThisEmailHasBeenUsed
+
 
 };
